@@ -56,18 +56,21 @@ func authMiddleware(authService auth.Service, userService user.Service) gin.Hand
 	return func(c *gin.Context) {
 		authHeader := c.GetHeader("Authorization")
 
+		// check header contains word "Bearer"
 		if !strings.Contains(authHeader, "Bearer") {
 			response := helper.APIResponse("Unauthorized", http.StatusUnauthorized, "error", nil)
 			c.AbortWithStatusJSON(http.StatusUnauthorized, response)
 			return
 		}
 
+		// split header to get token
 		splittedHeader := strings.Split(authHeader, " ")
 		tokenString := ""
 		if len(splittedHeader) == 2 {
 			tokenString = splittedHeader[1]
 		}
 
+		// validate token
 		token, err := authService.ValidateToken(tokenString)
 		if err != nil {
 			response := helper.APIResponse("Unauthorized", http.StatusUnauthorized, "error", nil)
@@ -75,6 +78,7 @@ func authMiddleware(authService auth.Service, userService user.Service) gin.Hand
 			return
 		}
 
+		// get claims and return with mapClaims
 		claim, ok := token.Claims.(jwt.MapClaims)
 		if !ok || !token.Valid {
 			response := helper.APIResponse("Unauthorized", http.StatusUnauthorized, "error", nil)
@@ -82,8 +86,10 @@ func authMiddleware(authService auth.Service, userService user.Service) gin.Hand
 			return
 		}
 
+		// convert user id in claims data to int
 		userId := int(claim["user_id"].(float64))
 
+		// get user by id
 		user, err := userService.GetUserByID(userId)
 		if err != nil {
 			response := helper.APIResponse("Unauthorized", http.StatusUnauthorized, "error", nil)
@@ -91,6 +97,7 @@ func authMiddleware(authService auth.Service, userService user.Service) gin.Hand
 			return
 		}
 
+		// set user data to context
 		c.Set("currentUser", user)
 
 	}
