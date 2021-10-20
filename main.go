@@ -25,6 +25,14 @@ func main() {
 	authService := auth.NewService()
 
 	// fmt.Println(authService.GenerateToken(1223))
+	// token, err := authService.ValidateToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxfQ.FfZQnP1tu6QV26-EHdr1kxKLJGdok9vbGAPSgrM72UM")
+	// if err != nil {
+	// 	fmt.Println(err)
+	// }
+
+	// if token.Valid {
+	// 	fmt.Println("VALID")
+	// }
 
 	userHandler := handler.NewUserHandler(userService, authService)
 	router := gin.Default()
