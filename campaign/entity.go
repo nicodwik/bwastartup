@@ -21,6 +21,6 @@ type Campaign struct {
 type CampaignImage struct {
 	ID         int
 	CampaignID int
-	Filename   int
+	Filename   string
 	isPrimary  bool
 }
