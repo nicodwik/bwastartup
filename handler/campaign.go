@@ -3,6 +3,7 @@ package handler
 import (
 	"bwastartup/campaign"
 	"bwastartup/helper"
+	"bwastartup/user"
 	"net/http"
 	"strconv"
 
@@ -54,4 +55,29 @@ func (h *campaignHandler) GetCampaign(c *gin.Context) {
 	response := helper.APIResponse("Campaign Detail", http.StatusOK, "success", campaign.FormatCampaignDetail(campaignDetail))
 	c.JSON(http.StatusOK, response)
 
+}
+
+func (h *campaignHandler) CreateCampaign(c *gin.Context) {
+	var input campaign.CreateCampaignInput
+
+	err := c.ShouldBindJSON(&input)
+	if err != nil {
+		errorMessage := gin.H{"errors": helper.FormatError(err)}
+		response := helper.APIResponse("Failed to create campaign", http.StatusBadRequest, "error", errorMessage)
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	currentUser := c.MustGet("currentUser").(user.User)
+	input.User = currentUser
+
+	savedCampaign, err := h.service.CreateCampaign(input)
+	if err != nil {
+		response := helper.APIResponse("Failed to create campaign", http.StatusBadRequest, "error", nil)
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	response := helper.APIResponse("Campaign Created Successfully", http.StatusOK, "success", campaign.FormatCampaign(savedCampaign))
+	c.JSON(http.StatusOK, response)
 }
