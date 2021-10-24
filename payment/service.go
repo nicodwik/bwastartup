@@ -26,8 +26,7 @@ func (s *service) GetPaymentURL(transaction Transaction, user user.User) (string
 	midclient.ClientKey = ""
 	midclient.APIEnvType = midtrans.Sandbox
 
-	var snapGateway midtrans.SnapGateway
-	snapGateway = midtrans.SnapGateway{
+	snapGateway := midtrans.SnapGateway{
 		Client: midclient,
 	}
 
