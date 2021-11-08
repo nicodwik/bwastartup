@@ -2,6 +2,7 @@ package payment
 
 import (
 	"bwastartup/campaign"
+	constans "bwastartup/constants"
 	"bwastartup/user"
 	"strconv"
 
@@ -22,8 +23,8 @@ func NewService(campaignRepository campaign.Repository) *service {
 
 func (s *service) GetPaymentURL(transaction Transaction, user user.User) (string, error) {
 	midclient := midtrans.NewClient()
-	midclient.ServerKey = ""
-	midclient.ClientKey = ""
+	midclient.ServerKey = constans.MidtransServerKey
+	midclient.ClientKey = constans.MidtransClientKey
 	midclient.APIEnvType = midtrans.Sandbox
 
 	snapGateway := midtrans.SnapGateway{

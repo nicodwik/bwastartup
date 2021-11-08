@@ -12,7 +12,7 @@ type CampaignTransactionFormatter struct {
 type UserTransactionFormatter struct {
 	ID        int               `json:"id"`
 	Amount    int               `json:"amount"`
-	Status    int               `json:"status"`
+	Status    string            `json:"status"`
 	CreatedAt time.Time         `json:"created_at"`
 	Campaign  CampaignFormatter `json:"campaign"`
 }
@@ -62,12 +62,13 @@ func FormatUserTransaction(transaction Transaction) UserTransactionFormatter {
 	formatter.ID = transaction.ID
 	formatter.Amount = transaction.Amount
 	formatter.CreatedAt = transaction.CreatedAt
+	formatter.Status = transaction.Status
 
 	campaignFormatter := CampaignFormatter{}
 	campaignFormatter.Name = transaction.Campaign.Name
 	campaignFormatter.ImageUrl = ""
 	if len(transaction.Campaign.CampaignImages) > 0 {
-		campaignFormatter.ImageUrl = transaction.Campaign.CampaignImages[0].Filename
+		campaignFormatter.ImageUrl = transaction.Campaign.CampaignImages[0].FileName
 	}
 
 	formatter.Campaign = campaignFormatter

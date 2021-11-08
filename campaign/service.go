@@ -113,7 +113,7 @@ func (s *service) SaveCampaignImage(input CreateCampaignImageInput, fileLocation
 	campaignImage := CampaignImage{}
 	campaignImage.CampaignID = input.CampaignID
 	campaignImage.IsPrimary = input.IsPrimary
-	campaignImage.Filename = fileLocation
+	campaignImage.FileName = fileLocation
 
 	savedCampaignImage, err := s.repository.SaveImage(campaignImage)
 	if err != nil {
