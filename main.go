@@ -46,7 +46,7 @@ func main() {
 	campaignHandler := handler.NewCampaignHandler(campaignService)
 	transactionHandler := handler.NewTransactionHandler(transactionService)
 
-	webUserHandler := webHandler.NewUserHandler()
+	webUserHandler := webHandler.NewUserHandler(userService)
 
 	router := gin.Default()
 	config := cors.DefaultConfig()
@@ -55,8 +55,11 @@ func main() {
 	router.HTMLRender = loadTemplates("./web/templates")
 	router.Use(cors.New(config))
 
-	//for accessing image file
+	//for accessing file
 	router.Static("/images", "./images")
+	router.Static("/js", "./web/assets/js")
+	router.Static("/css", "./web/assets/css")
+	router.Static("/webfonts", "./web/assets/webfonts")
 
 	api := router.Group("/api/v1")
 
@@ -78,6 +81,10 @@ func main() {
 	api.POST("/transactions/webhook", transactionHandler.GetWebhook)
 
 	router.GET("/users", webUserHandler.Index)
+	router.GET("/users/create", webUserHandler.Create)
+	router.GET("/users/edit/:id", webUserHandler.Edit)
+	router.POST("/users", webUserHandler.Store)
+	router.POST("/users/update/:id", webUserHandler.Update)
 
 	router.Run()
 }
