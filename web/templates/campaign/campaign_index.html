@@ -1,0 +1,32 @@
+{{define "content"}}
+    <h2 class="mb-4">Campaign List</h2>
+    <div class="card mb-2">
+        <div class="card-body">
+            <a href="campaigns/create" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Create</a>
+            <table class="table mb-0">
+                <thead class="thead-light">
+                    <tr>
+                        <td>Name</td>
+                        <td>Short Desc</td>
+                        <td>Goal Amount</td>
+                        <td>Action</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{range .campaigns}}
+                        <tr>
+                            <td>{{if .CampaignImages}}<img class="img-fluid img-thumbnail" src="{{ (index .CampaignImages 0).FileName }} " width="60">{{end}}</td>
+                            <td>{{.Name}}</td>
+                            <td>{{.ShortDescription}}</td>
+                            <td>{{.GoalAmountIDRFormatter}}</td>
+                            <td>
+                                <a href="campaigns/edit/{{.ID}}" class="btn btn-primary"><i class="fa fa-edit"></i></a>
+                                <a href="campaigns/avatar/{{.ID}}" class="btn btn-outline-primary"><i class="fa fa-camera"></i></a>
+                            </td>
+                        </tr>
+                    {{end}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{{end}}

@@ -3,6 +3,8 @@ package campaign
 import (
 	"bwastartup/user"
 	"time"
+
+	"github.com/leekchan/accounting"
 )
 
 type Campaign struct {
@@ -27,4 +29,9 @@ type CampaignImage struct {
 	CampaignID int
 	FileName   string
 	IsPrimary  bool
+}
+
+func (c Campaign) GoalAmountIDRFormatter() string {
+	ac := accounting.Accounting{Symbol: "Rp. ", Thousand: "."}
+	return ac.FormatMoney(c.GoalAmount)
 }

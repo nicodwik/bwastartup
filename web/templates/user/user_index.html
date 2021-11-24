@@ -20,7 +20,10 @@
                             <td>{{.Name}}</td>
                             <td>{{.Occupation}}</td>
                             <td>{{.Email}}</td>
-                            <td><a href="users/edit/{{.Id}}" class="btn btn-outline-primary"><i class="fa fa-edit"></i></a></td>
+                            <td>
+                                <a href="users/edit/{{.Id}}" class="btn btn-primary"><i class="fa fa-edit"></i></a>
+                                <a href="users/avatar/{{.Id}}" class="btn btn-outline-primary"><i class="fa fa-camera"></i></a>
+                            </td>
                         </tr>
                     {{end}}
                 </tbody>
