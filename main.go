@@ -47,7 +47,7 @@ func main() {
 	transactionHandler := handler.NewTransactionHandler(transactionService)
 
 	webUserHandler := webHandler.NewUserHandler(userService)
-	webCampaignHandler := webHandler.NewCampaignHandler(campaignService)
+	webCampaignHandler := webHandler.NewCampaignHandler(campaignService, userService)
 
 	router := gin.Default()
 	config := cors.DefaultConfig()
@@ -81,6 +81,7 @@ func main() {
 	api.POST("/transactions", authMiddleware(authService, userService), transactionHandler.CreateTransaction)
 	api.POST("/transactions/webhook", transactionHandler.GetWebhook)
 
+	// Router for CMS web
 	router.GET("/users", webUserHandler.Index)
 	router.GET("/users/create", webUserHandler.Create)
 	router.GET("/users/edit/:id", webUserHandler.Edit)
@@ -90,6 +91,13 @@ func main() {
 	router.POST("/users/avatar/:id", webUserHandler.UploadAvatar)
 
 	router.GET("/campaigns", webCampaignHandler.Index)
+	router.GET("/campaigns/create", webCampaignHandler.Create)
+	router.GET("/campaigns/image/:id", webCampaignHandler.UploadImage)
+	router.GET("/campaigns/edit/:id", webCampaignHandler.Edit)
+	router.GET("/campaigns/show/:id", webCampaignHandler.Show)
+	router.POST("/campaigns", webCampaignHandler.Store)
+	router.POST("/campaigns/image/:id", webCampaignHandler.StoreImage)
+	router.POST("/campaigns/update/:id", webCampaignHandler.Update)
 
 	router.Run()
 }

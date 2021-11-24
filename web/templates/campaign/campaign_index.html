@@ -16,12 +16,12 @@
                     {{range .campaigns}}
                         <tr>
                             <td>{{if .CampaignImages}}<img class="img-fluid img-thumbnail" src="{{ (index .CampaignImages 0).FileName }} " width="60">{{end}}</td>
-                            <td>{{.Name}}</td>
+                            <td><a href="campaigns/show/{{.ID}}">{{.Name}}</a></td>
                             <td>{{.ShortDescription}}</td>
                             <td>{{.GoalAmountIDRFormatter}}</td>
                             <td>
                                 <a href="campaigns/edit/{{.ID}}" class="btn btn-primary"><i class="fa fa-edit"></i></a>
-                                <a href="campaigns/avatar/{{.ID}}" class="btn btn-outline-primary"><i class="fa fa-camera"></i></a>
+                                <a href="campaigns/image/{{.ID}}" class="btn btn-outline-primary"><i class="fa fa-camera"></i></a>
                             </td>
                         </tr>
                     {{end}}

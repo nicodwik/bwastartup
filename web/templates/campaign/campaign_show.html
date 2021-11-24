@@ -1,0 +1,35 @@
+{{define "content"}}
+    <h2 class="mb-4">Detail Campaign</h2>
+    <div class="card">
+        <div class="card-body">
+            <div class="form-group mb-3">
+                <label for="">Name</label>
+                <input type="text" name="name" class="form-control" required placeholder="Enter Name" value="{{.Name}}" disabled>
+            </div>
+            <div class="form-group mb-3">
+                <label for="">Short Description</label>
+                <input type="text" name="short_description" class="form-control" required placeholder="Enter Short Description" value="{{.ShortDescription}}" disabled>
+            </div>
+            <div class="form-group mb-3">
+                <label for="">Description</label>
+                <textarea name="description" id="" cols="30" rows="10" class="form-control" required placeholder="Enter Description" disabled>{{.Description}}</textarea>
+            </div>
+            <div class="form-group mb-3">
+                <label for="">Goal Amount</label>
+                <input type="text" name="goal_amount" class="form-control" required placeholder="Enter Goal Amount" value="{{.GoalAmountIDRFormatter}}" disabled>
+            </div>
+            <div class="form-group mb-3">
+                <label for="">Perks (comma separated)</label>
+                <input type="text" name="perks" class="form-control" required placeholder="Enter Perks" value="{{.Perks}}" disabled>
+            </div>
+            <div class="form-group mb-3">
+                <label for="">Backer Count</label>
+                <input type="text" name="perks" class="form-control" required placeholder="Enter Perks" value="{{.BackerCount}}" disabled>
+            </div>
+            <div class="form-group mb-3">
+                <label for="">Current Amount</label>
+                <input type="text" name="perks" class="form-control" required placeholder="Enter Perks" value="{{.CurrentAmount}}" disabled>
+            </div>
+        </div>
+    </div>
+{{end}}
